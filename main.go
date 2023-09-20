@@ -14,6 +14,7 @@ func main(){
 	r.GET("/create-redis", Create)
 	r.GET("/get-redis", Get)
 	r.GET("/delete-redis", Delete)
+	r.GET("/create-list-redis", CreateList)
   	r.Run()
 }
 
@@ -69,5 +70,16 @@ func Delete(c *gin.Context){
 	}
 
 	c.JSON(200, "redis: data deleted !!")
+	return 
+}
+
+func CreateList(c *gin.Context){
+	client, ctx := RedisConnection()
+	err := client.RPush(ctx, "myList", "item1", "item2", "item3").Err()
+	if err != nil {
+		fmt.Println("Error pushing to list:", err)
+	}
+
+	c.JSON(200, "redis: list data inserted success !!")
 	return 
 }
