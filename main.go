@@ -15,6 +15,7 @@ func main(){
 	r.GET("/get-redis", Get)
 	r.GET("/delete-redis", Delete)
 	r.GET("/create-list-redis", CreateList)
+	r.GET("/create-set-redis", CreateSet)
   	r.Run()
 }
 
@@ -81,5 +82,17 @@ func CreateList(c *gin.Context){
 	}
 
 	c.JSON(200, "redis: list data inserted success !!")
+	return 
+}
+
+
+func CreateSet(c *gin.Context){
+	client, ctx := RedisConnection()
+	err := client.SAdd(ctx, "mySet", "member1", "member2", "member3").Err()
+	if err != nil {
+		fmt.Println("Error adding to set:", err)
+	}
+
+	c.JSON(200, "redis: set data inserted success !!")
 	return 
 }
