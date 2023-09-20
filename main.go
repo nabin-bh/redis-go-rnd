@@ -38,6 +38,8 @@ func Create(c *gin.Context){
 	} else {
 		fmt.Println("Key set successfully")
 	}
+	c.JSON(200, "redis: data inserted successfully")
+	return 
 }
 
 func Get(c *gin.Context){
@@ -48,6 +50,8 @@ func Get(c *gin.Context){
 	} else {
 		fmt.Println("Value:", value)
 	}
+	c.JSON(200, "redis: get data 'key': "+ value)
+	return 
 }
 
 func Delete(c *gin.Context){
@@ -58,4 +62,7 @@ func Delete(c *gin.Context){
 	} else {
 		fmt.Println("Key deleted")
 	}
+
+	c.JSON(200, "redis: data deleted !!")
+	return 
 }
