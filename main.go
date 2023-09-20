@@ -7,12 +7,13 @@ import (
     "github.com/go-redis/redis/v8"
 	"github.com/gin-gonic/gin"
 )
- 
+
 
 func main(){
 	r := gin.Default()
 	r.GET("/create-redis", Create)
 	r.GET("/get-redis", Get)
+	r.GET("/delete-redis", Delete)
   	r.Run()
 }
 
@@ -46,5 +47,15 @@ func Get(c *gin.Context){
 		fmt.Println("Error getting key:", err)
 	} else {
 		fmt.Println("Value:", value)
+	}
+}
+
+func Delete(c *gin.Context){
+	client, ctx := RedisConnection()
+	err := client.Del(ctx, "key").Err()
+	if err != nil {
+		fmt.Println("Error deleting key:", err)
+	} else {
+		fmt.Println("Key deleted")
 	}
 }
