@@ -26,13 +26,18 @@ func RedisConnection()(*redis.Client, context.Context){
 
 	ctx := context.Background()
 
+	_, err := client.Ping(ctx).Result()
+	if err != nil {
+		fmt.Println("Error connecting to Redis:", err) 
+	}
+
 	return client, ctx
 }
 
 func Create(c *gin.Context){
 	client, ctx := RedisConnection()
 	 
-	errs := client.Set(ctx, "key", "value 1", 0).Err()
+	errs := client.Set(ctx, "key", "value 22", 0).Err()
 	if errs != nil {
 		fmt.Println("Error setting key:", errs)
 	} else {
